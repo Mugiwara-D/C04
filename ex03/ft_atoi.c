@@ -32,3 +32,8 @@ int		ft_atoi(char *str)
 		v = (v * -1);
 	return (v);
 }
+int main()
+{
+	char str[] = "----15"
+	
+}i
