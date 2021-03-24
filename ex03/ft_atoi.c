@@ -1,35 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnmbr.c                                       :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mderuell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/24 10:59:03 by mderuell          #+#    #+#             */
-/*   Updated: 2021/03/24 11:26:40 by mderuell         ###   ########.fr       */
+/*   Created: 2021/03/24 11:28:20 by mderuell          #+#    #+#             */
+/*   Updated: 2021/03/24 16:11:53 by mderuell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-
-void	ft_putnbr(int nb)
+int		ft_atoi(char *str)
 {
-	char a;
+	int i;
+	int a;
+	int v;
 
-	if (nb < 0)
+	i = 0;
+	a = 0;
+	v = 0;
+	while (str[i] && (str[i] < 'a' || str[i] > 'z')
+			&& (str[i] < 'A' || str[i] > 'Z'))
 	{
-		write(1, "-", 1);
-		nb = (nb * -1);
+		if (str[i] == '-')
+			a++;
+		if (str[i] >= '0' && str[i] <= '9')
+			v = ((v * 10) + (str[i] - '0'));
+		i++;
 	}
-	if (nb > 9 || nb < -9)
-	{
-		ft_putnbr(nb / 10);
-		a = ((nb % 10) + '0');
-		write(1, &a, 1);
-	}
-	else
-	{
-		a = nb + '0';
-		write(1, &a, 1);
-	}
+	if ((a % 2) == 1)
+		v = (v * -1);
+	return (v);
 }
