@@ -1,19 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_putnbr_base.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mderuell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/03/25 14:55:35 by mderuell          #+#    #+#             */
+/*   Updated: 2021/03/25 16:00:19 by mderuell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include <unistd.h>
-void	ft_putstr(char *str)
-{
-	int i;
 
-	i = 0;
-	while (str[i])
-	{
-		write(1, &str[i], 1);
-		i++;
-	}
-}
 int		ft_strlen(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i])
@@ -21,43 +22,31 @@ int		ft_strlen(char *str)
 	return (i);
 }
 
-void	ft_putnbr_base(int nbr,char *base)
+int		check_base(char *base)
 {
 	int i;
-	int a;
 
-	i = ft_strlen(base);
-	char c[i];
-	if (nbr <= i && nbr >= -i)
+	i = 0;
+	while (base[i])
 	{
-		c[i] = base[nbr];
-		ft_putstr(c);
+		if (base[i] <= 31 || base[i] == '-' || base[i] == '+')
+			return (0);
+		i++;
 	}
+	return (1);
 }
 
-
-void	ft_putnbr(int nb)
+void	ft_putnbr_base(int nbr, char *base)
 {
-	char a;
-
-	if (nb < 0)
+	if (ft_strlen(base) <= 1)
+		return ;
+	else if (check_base(base) == 0)
+		return ;
+	else if (nbr >= ft_strlen(base))
 	{
-		write(1, "-", 1);
-		nb = (nb * -1);
-	}
-	if (nb > 9 || nb < -9)
-	{
-		ft_putnbr(nb / 10);
-		a = ((nb % 10) + '0');
-		write(1, &a, 1);
+		ft_putnbr_base(nbr / (ft_strlen(base)), base);
+		ft_putnbr_base(nbr % (ft_strlen(base)), base);
 	}
 	else
-	{
-		a = nb + '0';
-		write(1, &a, 1);
-	}
-}
-int main()
-{
-	ft_putnbr_base(1,"0123456789");
+		write(1, base + nbr, 1);
 }
